@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://raghavbobal1.github.io/portfolio-website-latest/sitemap.xml
