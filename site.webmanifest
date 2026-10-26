@@ -1,0 +1,16 @@
+{
+  "name": "Raghav Bobal — Software Developer",
+  "short_name": "Raghav Bobal",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#101318",
+  "theme_color": "#101318",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
