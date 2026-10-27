@@ -1,36 +1,53 @@
-# Raghav Bobal — Portfolio
+# Raghav Bobal
+### Software Developer · Banking Systems · Security · Applied AI
 
-Personal developer portfolio featuring banking engineering, security and applied AI work.
+[![Raghav Bobal portfolio banner](assets/social-preview.svg)](https://raghavbobal1.github.io/portfolio-website-latest/)
 
-**Portfolio:** https://raghavbobal1.github.io/portfolio-website-latest/
+**[Explore the portfolio](https://raghavbobal1.github.io/portfolio-website-latest/)** · [LinkedIn](https://www.linkedin.com/in/ACoAAC4Bcc0BImTOCM6A_5gzhyzdk9VVMSNhSLc) · [GitHub](https://github.com/raghavbobal1)
 
-## Run locally
+A personal corner of the web built to show how I approach software engineering: building reliable banking experiences, solving security and production problems, and exploring practical AI systems.
 
-Download or clone this repository, then open `index.html` in a browser. The portfolio is self-contained: markup, styling, interactivity and printable résumé are bundled into the page.
+## Take a look around
 
-Or start a local web server:
+- **Selected work:** Expandable case studies covering payments, digital banking, security and AI projects.
+- **System explorer:** Interactive views of banking, security and AI architectures.
+- **Debugging challenge:** A few Java and API problems you can try right in the browser.
+- **My journey:** Experience at BMO and Beacontree, research at Lambton College, and my education.
+- **Quick navigation:** Keyboard shortcuts, responsive layouts and accessible interactions.
+
+## Built with
+
+**HTML · CSS · JavaScript**
+
+No heavy frontend framework is required. The portfolio uses custom visuals, lightweight interactions and responsive layouts. There's no backend to configure.
+
+## Run it locally
 
 ```bash
+git clone https://github.com/raghavbobal1/portfolio-website-latest.git
+cd portfolio-website-latest
 python3 -m http.server 8000
 ```
 
-Visit http://localhost:8000.
+Open **http://localhost:8000**. You can also open `index.html` directly.
 
-## What's inside
+## Behind the scenes
 
-- Selected work and expandable case studies
-- Professional experience and education (including Lambton College)
-- Interactive systems explorer and short debugging challenge
-- Responsive layouts, keyboard navigation and contact links
+- `index.html` — content and page structure
+- `styles.css` — visual design and responsive styling
+- `script.js` — interactions, project panels and challenges
+- `tests/` — lightweight site checks
+- `docs/` — [deployment notes](docs/DEPLOYMENT.md) and [project documentation](docs/PROJECTS.md)
 
-## Updating projects
+Run the checks with:
 
-Project screenshots, demos and code links are intentionally easy to add later. Don't include customer information, company source code or private assets in a public repository. Early-stage AI case studies are described as concepts/prototypes rather than shipped production systems.
+```bash
+python3 -m unittest discover -s tests -v
+node --check script.js
+```
 
-## Publishing
+---
 
-See [deployment instructions](docs/DEPLOYMENT.md). The site contains no analytics, API keys or backend secrets.
+**Based in Toronto, Canada.** Open to software engineering opportunities across backend, full-stack and AI-enabled applications.
 
-## Contact
-
-[LinkedIn](https://www.linkedin.com/in/ACoAAC4Bcc0BImTOCM6A_5gzhyzdk9VVMSNhSLc) · [GitHub](https://github.com/raghavbobal1)
+**[Visit the website](https://raghavbobal1.github.io/portfolio-website-latest/)** · **[Get in touch](mailto:raghavbobal10@gmail.com)**
