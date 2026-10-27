@@ -49,16 +49,112 @@
   function closeProject(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');clearTimeout(drawerTimer);drawerTimer=setTimeout(()=>{overlay.hidden=true;},370);lastFocused?.focus?.();}
   $$('.project-card').forEach(card=>card.addEventListener('click',()=>openProject(card.dataset.project)));$('#drawer-close').addEventListener('click',closeProject);overlay.addEventListener('click',closeProject);$('#drawer-next').addEventListener('click',()=>openProject(order[(order.indexOf(currentId)+1)%order.length]));
   $$('.filter').forEach(btn=>btn.addEventListener('click',()=>{const filter=btn.dataset.filter;$$('.filter').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-pressed',b===btn?'true':'false');});$$('.project-card').forEach(card=>{card.hidden=filter!=='all'&&card.dataset.type!==filter;});}));
-  const scenarios=[
-    {q:'Users report a 401 from a previously working secured REST endpoint. Where do you start?',options:['Increase the database connection pool','Check token expiry, scopes and authorization rules','Restart every microservice immediately'],correct:1,why:'Start with the auth path and a reproducible request before touching unrelated infrastructure.'},
-    {q:'A Java build passes locally but CI fails after a dependency upgrade. First move?',options:['Compare Gradle, JDK and dependency versions in CI logs','Delete all automated tests','Increase API request timeout'],correct:0,why:'Isolate the environment or dependency mismatch. The first fix should follow evidence.'},
-    {q:'A payment endpoint processes the same request twice after retries. Best safeguard?',options:['Hide the duplicate from the UI','Disable all retries permanently','Use an idempotency key and enforce it server-side'],correct:2,why:'Idempotency makes repeated requests safe and is crucial when retries are unavoidable.'}
-  ];
-  let round=0,score=0,answered=false;
-  function renderChallenge(){answered=false;const obj=scenarios[round];$('#challenge-count').textContent=`CASE 0${round+1} / 03`;$('#challenge-score').textContent=`SCORE ${score}`;$('#challenge-description').textContent=obj.q;$('#challenge-feedback').textContent='';$('#challenge-feedback').classList.remove('error');$('#next-case').disabled=true;$('#next-case').textContent=round===2?'SEE YOUR RESULTS →':'CONTINUE TO NEXT CASE →';const opts=$('#challenge-options');opts.replaceChildren();obj.options.forEach((text,i)=>{const btn=document.createElement('button');btn.type='button';btn.className='challenge-option';btn.innerHTML=`<b>0${i+1}</b><span></span>`;btn.querySelector('span').textContent=text;btn.addEventListener('click',()=>answer(i));opts.append(btn);});}
-  function answer(i){if(answered)return;answered=true;const p=scenarios[round];const correct=i===p.correct;if(correct)score++;$$('.challenge-option').forEach((b,j)=>{b.disabled=true;if(j===p.correct)b.classList.add('correct');else if(i===j)b.classList.add('incorrect');});const fb=$('#challenge-feedback');fb.classList.toggle('error',!correct);fb.textContent=(correct?'✓ CORRECT. ':'↳ NOT QUITE. ')+p.why;$('#challenge-score').textContent=`SCORE ${score}`;$('#next-case').disabled=false;}
-  $('#next-case').addEventListener('click',()=>{if(!answered)return;if(round>=2){$('#challenge-description').textContent=score===3?'3 / 3. Nicely debugged.':'Challenge complete — '+score+' / 3 solved.';$('#challenge-feedback').textContent='Good engineering starts with asking the right questions.';$('#challenge-feedback').classList.remove('error');$('#challenge-options').replaceChildren();$('#next-case').disabled=true;$('#challenge-count').textContent='SESSION COMPLETE';}else{round++;renderChallenge();}});
-  $('#challenge-restart').addEventListener('click',()=>{round=0;score=0;renderChallenge();});renderChallenge();
+  // Challenge UI: randomized cases and options are supplied by the testable quiz engine.
+  const quiz=window.PortfolioQuiz;
+  const ROUND_SIZE=5;
+  let category='mixed', deck=[], round=0, score=0, streak=0, solved=0, answered=false, finished=false;
+  const gameButton=$('#next-case'), feedback=$('#challenge-feedback');
+  const categoryButtons=$$('.challenge-category');
+  function updateGameStats(){
+    $('#challenge-score').textContent=String(score).padStart(4,'0');
+    $('#challenge-streak').innerHTML=String(streak)+' <small>×</small>';
+    $('#challenge-solved').textContent=solved+' / '+ROUND_SIZE;
+  }
+  function updateGameProgress(completed){
+    const track=$('.challenge-track');
+    track.setAttribute('aria-valuenow',String(completed));
+    $('#challenge-progress-fill').style.width=(completed/ROUND_SIZE*100)+'%';
+  }
+  function renderChallenge(){
+    answered=false;finished=false;
+    const q=deck[round];
+    $('#challenge-count').textContent='CASE '+String(round+1).padStart(2,'0')+' / 0'+ROUND_SIZE;
+    $('#challenge-topic').textContent=quiz.CATEGORY_NAMES[category].toUpperCase();
+    $('#challenge-level').textContent=q.level;
+    $('#challenge-description').textContent=q.question;
+    const snippet=$('#challenge-snippet');
+    snippet.hidden=!q.snippet;
+    snippet.textContent=q.snippet;
+    feedback.textContent='';
+    feedback.classList.remove('error','success');
+    $('#challenge-result').hidden=true;
+    gameButton.disabled=true;
+    gameButton.textContent=round===ROUND_SIZE-1?'SEE YOUR RESULTS →':'CONTINUE TO NEXT CASE →';
+    const options=$('#challenge-options');
+    options.replaceChildren();
+    q.options.forEach((label,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='challenge-option';
+      b.innerHTML='<b>0'+(i+1)+'</b><span></span>';
+      b.querySelector('span').textContent=label;
+      b.setAttribute('aria-label','Option '+(i+1)+': '+label);
+      b.addEventListener('click',()=>answer(i));
+      options.append(b);
+    });
+    updateGameStats();
+    updateGameProgress(round);
+  }
+  function answer(i){
+    if(answered||finished||i<0||i>=4)return;
+    answered=true;
+    const q=deck[round],correct=i===q.correct;
+    const points=quiz.scoreAnswer(streak,correct);
+    score+=points.points;
+    streak=points.nextStreak;
+    if(correct)solved++;
+    $$('.challenge-option').forEach((b,j)=>{
+      b.disabled=true;
+      if(j===q.correct)b.classList.add('correct');
+      else if(j===i)b.classList.add('incorrect');
+    });
+    feedback.classList.toggle('error',!correct);
+    feedback.classList.toggle('success',correct);
+    feedback.textContent=(correct?'✓ GOOD CALL · +'+points.points+' PTS. ':'↳ NOT THIS TIME. ')+q.why;
+    updateGameStats();
+    updateGameProgress(round+1);
+    gameButton.disabled=false;
+  }
+  function finishRound(){
+    finished=true;answered=true;
+    $('#challenge-count').textContent='SESSION COMPLETE';
+    $('#challenge-topic').textContent=quiz.CATEGORY_NAMES[category].toUpperCase();
+    $('#challenge-level').textContent='ROUND FINISHED';
+    $('#challenge-description').textContent=solved===ROUND_SIZE?'Clean sweep. All systems green.':'Incident review complete.';
+    $('#challenge-snippet').hidden=true;
+    $('#challenge-options').replaceChildren();
+    feedback.classList.remove('error','success');
+    feedback.textContent='Five incidents reviewed. Want a different mix? Start another round.';
+    const result=$('#challenge-result');
+    result.hidden=false;
+    $('#challenge-rank').textContent=quiz.resultLabel(solved,ROUND_SIZE);
+    $('#challenge-result-note').textContent=solved+' / '+ROUND_SIZE+' solved · '+score+' points · '+quiz.CATEGORY_NAMES[category]+'. These are just practice scenarios, not a technical assessment.';
+    gameButton.textContent='PLAY ANOTHER ROUND ↻';
+    gameButton.disabled=false;
+  }
+  function startRound(){
+    deck=quiz.makeRound(category,ROUND_SIZE);
+    if(deck.length!==ROUND_SIZE)throw new Error('Unable to construct a complete debugging round');
+    round=0;score=0;streak=0;solved=0;answered=false;finished=false;
+    categoryButtons.forEach(b=>{
+      const active=b.dataset.category===category;
+      b.classList.toggle('active',active);
+      b.setAttribute('aria-pressed',String(active));
+    });
+    renderChallenge();
+  }
+  categoryButtons.forEach(btn=>btn.addEventListener('click',()=>{
+    category=btn.dataset.category;
+    startRound();
+  }));
+  gameButton.addEventListener('click',()=>{
+    if(finished){startRound();return;}
+    if(!answered)return;
+    if(round>=ROUND_SIZE-1){finishRound();return;}
+    round++;renderChallenge();
+  });
+  $('#challenge-restart').addEventListener('click',startRound);
+  startRound();
   let paletteResults=[],paletteSelected=0;const palette=$('#command-palette'),backdrop=$('#palette-backdrop'),searchInput=$('#palette-input');const locations=[{text:'Selected work',description:'View all projects',target:'#work'},{text:'Debugging challenge',description:'Interactive game',target:'#playground'},{text:'My story',description:'About and experience',target:'#about'},{text:'Technology stack',description:'Tools and skills',target:'.stack-section'},{text:'Contact me',description:'Email and socials',target:'#contact'},{text:'Resume PDF',description:'Download',target:'resume-download'},{text:'GitHub',description:'Browse repositories',target:'https://github.com/raghavbobal1'},{text:'LinkedIn',description:'Connect with Raghav',target:'https://www.linkedin.com/in/raghavbobal1/'},...order.map(id=>({text:projectInfo[id].title,description:'Project case study',project:id}))];
   function renderPalette(q=''){const matches=locations.filter(x=>(x.text+' '+x.description).toLowerCase().includes(q.toLowerCase()));paletteResults=matches;paletteSelected=Math.min(paletteSelected,Math.max(0,matches.length-1));const el=$('#palette-results');el.replaceChildren();matches.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.className=i===paletteSelected?'active':'';b.innerHTML='<span></span><small></small>';b.querySelector('span').textContent=m.text;b.querySelector('small').textContent=m.description;b.addEventListener('click',()=>activatePalette(i));b.addEventListener('mouseenter',()=>{paletteSelected=i;$$('.palette-results button').forEach((x,j)=>x.classList.toggle('active',j===i));});el.append(b);});if(!matches.length)el.innerHTML='<button type="button" disabled>No matching destinations</button>';}
   function openPalette(){palette.hidden=false;backdrop.hidden=false;document.body.classList.add('modal-open');searchInput.value='';paletteSelected=0;renderPalette();searchInput.focus();}
@@ -67,7 +163,7 @@
   $('#cmd-open').addEventListener('click',openPalette);backdrop.addEventListener('click',closePalette);searchInput.addEventListener('input',()=>{paletteSelected=0;renderPalette(searchInput.value);});searchInput.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();paletteSelected=Math.min(paletteSelected+1,paletteResults.length-1);renderPalette(searchInput.value);}if(e.key==='ArrowUp'){e.preventDefault();paletteSelected=Math.max(0,paletteSelected-1);renderPalette(searchInput.value);}if(e.key==='Enter'){e.preventDefault();activatePalette(paletteSelected);}});
   function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('visible');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('visible'),2200);}
   $('#copy-email').addEventListener('click',async()=>{const value='raghavbobal10@gmail.com';try{await navigator.clipboard.writeText(value);toast('EMAIL COPIED ✓');}catch(e){const t=document.createElement('textarea');t.value=value;t.style.position='fixed';t.style.opacity='0';document.body.append(t);t.select();try{document.execCommand('copy');toast('EMAIL COPIED ✓');}catch(e){toast(value);}t.remove();}});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!palette.hidden)closePalette();else if(drawer.classList.contains('open'))closeProject();}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(palette.hidden)openPalette();else closePalette();}if(e.key==='/'&& !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&palette.hidden&&!drawer.classList.contains('open')){e.preventDefault();openPalette();}if(['1','2','3'].includes(e.key)&&!answered&&palette.hidden&&!drawer.classList.contains('open')&&document.activeElement.tagName!=='INPUT'&&window.location.hash==='#playground'){answer(Number(e.key)-1);}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!palette.hidden)closePalette();else if(drawer.classList.contains('open'))closeProject();}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(palette.hidden)openPalette();else closePalette();}if(e.key==='/'&& !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&palette.hidden&&!drawer.classList.contains('open')){e.preventDefault();openPalette();}const inGame=(()=>{const r=$('#playground').getBoundingClientRect();return r.top<innerHeight*0.9&&r.bottom>innerHeight*0.15;})();const typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)||document.activeElement.isContentEditable;if(inGame&&!typing&&!e.altKey&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&palette.hidden&&!drawer.classList.contains('open')){if(['1','2','3','4'].includes(e.key)){e.preventDefault();answer(Number(e.key)-1);}else if(e.key==='Enter'&&answered&&document.activeElement.tagName!=='BUTTON'){e.preventDefault();gameButton.click();}}});
   const mobToggle=$('#mobile-toggle'),mobMenu=$('#mobile-menu');mobToggle.addEventListener('click',()=>{mobMenu.hidden=!mobMenu.hidden;mobToggle.setAttribute('aria-expanded',String(!mobMenu.hidden));});$$('#mobile-menu a').forEach(a=>a.addEventListener('click',()=>{mobMenu.hidden=true;mobToggle.setAttribute('aria-expanded','false');}));
   function updateScroll(){const max=document.documentElement.scrollHeight-innerHeight;$('#reading-progress').style.width=(max>0?window.scrollY/max*100:0)+'%';}addEventListener('scroll',updateScroll,{passive:true});updateScroll();$('#year').textContent=new Date().getFullYear();
   if(matchMedia('(pointer:fine)').matches){document.body.classList.add('pointer-present');let movePending=false,xx=0,yy=0;addEventListener('pointermove',e=>{xx=e.clientX;yy=e.clientY;if(!movePending){movePending=true;requestAnimationFrame(()=>{const cur=$('.cursor-light');cur.style.left=xx+'px';cur.style.top=yy+'px';movePending=false;});}},{passive:true});}
