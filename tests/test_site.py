@@ -62,6 +62,18 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn('data-filter="personal"', self.html)
         self.assertTrue((ROOT / "assets" / "bobal-app.png").is_file())
 
+    def test_replayable_engineering_challenge(self):
+        for required in ('data-category="mixed"', 'data-category="java"',
+                         'data-category="api"', 'data-category="security"',
+                         'data-category="cloud"', 'data-category="ai"',
+                         'id="challenge-score"', 'id="challenge-streak"',
+                         'id="challenge-progress-fill"', 'id="challenge-result"',
+                         'id="challenge-options"'):
+            with self.subTest(required=required):
+                self.assertIn(required, self.html)
+        self.assertIn('quiz-engine.js', self.html)
+        self.assertIn("quiz.makeRound(category,ROUND_SIZE)", self.script)
+
     def test_resume_is_embedded(self):
         self.assertIn("data:application/pdf;base64,", self.html)
 
