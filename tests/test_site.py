@@ -36,7 +36,7 @@ class PortfolioTests(unittest.TestCase):
                 self.assertIn(section, self.parser.ids)
 
     def test_case_studies(self):
-        for project in ("wires", "security", "olbb", "agent", "rag", "incident"):
+        for project in ("wires", "security", "olbb", "agent", "rag", "incident", "bobal"):
             with self.subTest(project=project):
                 self.assertIn(f'data-project="{project}"', self.html)
                 self.assertIn(f"{project}:", self.script)
@@ -55,6 +55,12 @@ class PortfolioTests(unittest.TestCase):
                 continue
             name = url.split("#", 1)[0].split("?", 1)[0]
             self.assertTrue((ROOT / name).is_file(), f"Missing {name}")
+
+    def test_bobal_app_and_github_link(self):
+        self.assertIn('class="header-github"', self.html)
+        self.assertIn('href="https://github.com/raghavbobal1"', self.html)
+        self.assertIn('data-filter="personal"', self.html)
+        self.assertTrue((ROOT / "assets" / "bobal-app.png").is_file())
 
     def test_resume_is_embedded(self):
         self.assertIn("data:application/pdf;base64,", self.html)
