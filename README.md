@@ -11,7 +11,7 @@ A personal corner of the web built to show how I approach software engineering: 
 
 - **Selected work:** Expandable case studies covering payments, digital banking, security and AI projects.
 - **System explorer:** Interactive views of banking, security and AI architectures.
-- **Debugging challenge:** A few Java and API problems you can try right in the browser.
+- **Engineering Score:** A replayable debugging game with 30 randomized Java, API, security, cloud and AI scenarios, shuffled answers, streak bonuses and explanations.
 - **My journey:** Experience at BMO and Beacontree, research at Lambton College, and my education.
 - **Quick navigation:** Keyboard shortcuts, responsive layouts and accessible interactions.
 
