@@ -74,6 +74,34 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn('quiz-engine.js', self.html)
         self.assertIn("quiz.makeRound(category,ROUND_SIZE)", self.script)
 
+    def test_seo_metadata_and_pages(self):
+        import xml.etree.ElementTree as ET
+        self.assertIn('<link rel="canonical"', self.html)
+        self.assertIn('application/ld+json', self.html)
+        self.assertIn('schema.org', self.html)
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        urls = [node.text for node in ET.fromstring(sitemap).iter()
+                if node.tag.endswith("loc")]
+        for page in ("index.html", "hire-software-developer-toronto.html",
+                     "bobal-language-learning-app.html"):
+            with self.subTest(page=page):
+                self.assertTrue((ROOT / page).is_file())
+        self.assertEqual(len(urls), 3)
+        self.assertIn("hire-software-developer-toronto.html", sitemap)
+        self.assertIn("bobal-language-learning-app.html", sitemap)
+        self.assertIn("Sitemap:", (ROOT / "robots.txt").read_text(encoding="utf-8"))
+
+    def test_opt_in_analytics_only(self):
+        config = (ROOT / "analytics-config.js").read_text(encoding="utf-8")
+        analytics = (ROOT / "analytics.js").read_text(encoding="utf-8")
+        privacy = (ROOT / "privacy.html").read_text(encoding="utf-8")
+        self.assertIn("window.PORTFOLIO_ANALYTICS_ID = '';", config)
+        self.assertNotIn("googletagmanager.com/gtag/js", self.html)
+        self.assertIn("choice === 'accepted'", analytics)
+        self.assertIn("function loadAnalytics()", analytics)
+        self.assertIn("consent", privacy.lower())
+        self.assertIn("analytics-config.js", self.html)
+
     def test_resume_is_embedded(self):
         self.assertIn("data:application/pdf;base64,", self.html)
 
