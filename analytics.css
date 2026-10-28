@@ -1,0 +1,12 @@
+/* Minimal, non-blocking consent UI; only shown after a valid GA4 ID is configured. */
+.analytics-consent{position:fixed;z-index:9999;bottom:18px;left:18px;right:18px;margin-left:auto;width:min(565px,calc(100% - 36px));padding:22px 23px;background:#121b1b;color:#f3f7ec;border:1px solid #c9f68a66;box-shadow:0 17px 65px #0008;border-radius:11px;font-family:system-ui,-apple-system,sans-serif;text-align:left}
+.analytics-consent[hidden]{display:none!important}
+.analytics-consent h2{font-size:16px;font-weight:750;letter-spacing:-.02em;margin:0 0 7px;color:#e5fcb5}
+.analytics-consent p{font-size:13px;line-height:1.55;color:#d4dfd5;margin:0 0 15px}
+.analytics-consent p a{color:#d9f79c;text-decoration:underline}
+.analytics-consent .analytics-consent-actions{display:flex;flex-wrap:wrap;gap:9px}
+.analytics-consent button{border:1px solid #c9d9c3;background:transparent;color:#f1f5ec;padding:10px 18px;min-height:40px;border-radius:5px;font:700 12px system-ui,sans-serif;cursor:pointer}
+.analytics-consent button[data-analytics-accept]{background:#dcfc78;color:#131c16;border-color:#dcfc78}
+.analytics-consent button:hover{filter:brightness(1.12)}
+.analytics-consent button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(max-width:600px){.analytics-consent{bottom:8px;left:8px;right:8px;width:calc(100% - 16px);padding:17px}.analytics-consent button{flex:1}}
