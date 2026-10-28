@@ -103,6 +103,7 @@
   });
   document.addEventListener('DOMContentLoaded', () => {
     markStatus();
+    document.querySelectorAll('[data-analytics-preferences]').forEach(button => { button.hidden = !configured; });
     if (!configured) return;
     const choice = readChoice();
     if (choice === 'accepted') loadAnalytics();
