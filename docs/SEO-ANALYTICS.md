@@ -6,7 +6,7 @@ This portfolio is hosted on GitHub Pages with no paid website hosting.
 
 1. Open https://analytics.google.com/ and sign in to your Google account.
 2. Create a Google Analytics account/property for the portfolio.
-3. Choose a **Web** data stream with URL `https://raghavbobal1.github.io/portfolio-website-latest/`.
+3. Choose a **Web** data stream with URL `https://raghavbobal.com/`.
 4. Copy the **Measurement ID** shown in the stream (it starts with `G-`).
 5. Edit [`analytics-config.js`](../analytics-config.js) so it contains your measurement ID:
 
@@ -26,9 +26,9 @@ The website includes a [privacy page](../privacy.html), optional-consent banner 
 ## Get indexed by Google
 
 1. Open https://search.google.com/search-console
-2. Add a **URL prefix** property for `https://raghavbobal1.github.io/portfolio-website-latest/`. Use a verification method supported by your current host. If Google provides an HTML file or meta tag, add exactly the verification data that Google gives you.
+2. Add a **URL prefix** property for `https://raghavbobal.com/`. Use a verification method supported by your current host. If Google provides an HTML file or meta tag, add exactly the verification data that Google gives you.
 3. Submit your sitemap:
-   `https://raghavbobal1.github.io/portfolio-website-latest/sitemap.xml`
+   `https://raghavbobal.com/sitemap.xml`
 4. Use **URL inspection** and **Request indexing** for:
    - Home page
    - `hire-software-developer-toronto.html`
@@ -39,7 +39,7 @@ Your name, contact info and project material are real. Avoid keyword stuffing, b
 
 ## Important after connecting a domain
 
-If you purchase `raghavbobal.com` (or another name), first connect it to GitHub Pages and confirm HTTPS works. Then update canonical URLs, sitemap, Search Console property, the GA4 website stream URL and any links to this website.
+The site is configured for `raghavbobal.com`. Connect its DNS records in Spaceship, then check HTTPS. Use `https://raghavbobal.com/` in Google Search Console and the GA4 web stream once the domain is live. See [deployment notes](DEPLOYMENT.md) for the exact DNS records.
 
 ## Optional next improvements
 

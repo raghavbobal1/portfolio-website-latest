@@ -2,7 +2,7 @@
 
 Software developer based in Toronto.
 
-[Portfolio](https://raghavbobal1.github.io/portfolio-website-latest/) | [GitHub](https://github.com/raghavbobal1) | [LinkedIn](https://www.linkedin.com/in/ACoAAC4Bcc0BImTOCM6A_5gzhyzdk9VVMSNhSLc)
+[Portfolio](https://raghavbobal.com/) | [GitHub](https://github.com/raghavbobal1) | [LinkedIn](https://www.linkedin.com/in/ACoAAC4Bcc0BImTOCM6A_5gzhyzdk9VVMSNhSLc)
 
 This is my portfolio website. I wanted one place to show the projects I've worked on and the kind of problems I like solving.
 
@@ -26,7 +26,7 @@ It's built using plain HTML, CSS and JavaScript. There's a projects section, a s
 
 You can see the live site here:
 
-https://raghavbobal1.github.io/portfolio-website-latest/
+https://raghavbobal.com/
 
 ## Run it locally
 

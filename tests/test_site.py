@@ -114,6 +114,17 @@ class PortfolioTests(unittest.TestCase):
                 self.assertNotRegex(content, r",\s+(and|or)\b")
                 self.assertNotRegex(content.lower(), r"case[-–—]stud(y|ies)")
 
+    def test_custom_domain_urls(self):
+        domain = "https://raghavbobal.com/"
+        self.assertEqual((ROOT / "CNAME").read_text(encoding="utf-8").strip(), "raghavbobal.com")
+        self.assertIn(f'<link rel="canonical" href="{domain}">', self.html)
+        for path in ("robots.txt", "sitemap.xml", "hire-software-developer-toronto.html",
+                     "bobal-language-learning-app.html", "privacy.html"):
+            with self.subTest(path=path):
+                content = (ROOT / path).read_text(encoding="utf-8")
+                self.assertIn(domain, content)
+                self.assertNotIn("raghavbobal1.github.io/portfolio-website-latest/", content)
+
     def test_seo_metadata_and_pages(self):
         import xml.etree.ElementTree as ET
         self.assertIn('<link rel="canonical"', self.html)
