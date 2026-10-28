@@ -80,6 +80,14 @@ class PortfolioTests(unittest.TestCase):
         )
         self.assertTrue((ROOT / "hire-software-developer-toronto.html").is_file())
 
+    def test_five_years_experience_is_consistent(self):
+        hiring = (ROOT / "hire-software-developer-toronto.html").read_text(encoding="utf-8")
+        self.assertIn("5 years of professional software development experience", hiring)
+        self.assertIn("I have 5 years of overall software development experience", hiring)
+        self.assertIn("5 years of software development experience", self.html)
+        self.assertNotIn("four years", hiring.lower())
+        self.assertNotIn("4 years", hiring.lower())
+
     def test_seo_metadata_and_pages(self):
         import xml.etree.ElementTree as ET
         self.assertIn('<link rel="canonical"', self.html)
