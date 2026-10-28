@@ -1,38 +1,32 @@
 # Raghav Bobal
-### Software Developer · Banking Systems · Security · Applied AI
 
-[![Raghav Bobal portfolio banner](assets/social-preview.svg)](https://raghavbobal1.github.io/portfolio-website-latest/)
+Software developer based in Toronto.
 
-**[Explore the portfolio](https://raghavbobal1.github.io/portfolio-website-latest/)** · [LinkedIn](https://www.linkedin.com/in/ACoAAC4Bcc0BImTOCM6A_5gzhyzdk9VVMSNhSLc) · [GitHub](https://github.com/raghavbobal1)
+[Portfolio](https://raghavbobal1.github.io/portfolio-website-latest/) | [GitHub](https://github.com/raghavbobal1) | [LinkedIn](https://www.linkedin.com/in/ACoAAC4Bcc0BImTOCM6A_5gzhyzdk9VVMSNhSLc)
 
-A personal corner of the web built to show how I approach software engineering: building reliable banking experiences, solving security and production problems, and exploring practical AI systems.
+This is my portfolio website. I wanted one place to show the projects I've worked on and the kind of problems I like solving.
 
-## Take a look around
+Most of my professional experience is in digital banking at BMO. I've worked on Angular and TypeScript interfaces, API integration and security fixes. I'm also building projects around Java, Spring Boot and AI tools.
 
-- **Selected work:** Expandable case studies covering payments, digital banking, security and AI projects.
-- **System explorer:** Interactive views of banking, security and AI architectures.
-- **Engineering Score:** A replayable debugging game with 30 randomized Java, API, security, cloud and AI scenarios, shuffled answers, streak bonuses and explanations.
-- **My journey:** Experience at BMO and Beacontree, research at Lambton College, and my education.
-- **Quick navigation:** Keyboard shortcuts, responsive layouts and accessible interactions.
+## Projects
 
-## Projects with source code
+**[Payment Reliability API](https://github.com/raghavbobal1/payment-reliability-api)**
 
-- [Payment reliability API (Java 21 / Spring Boot)](https://github.com/raghavbobal1/payment-reliability-api) — a simulated transfer API with idempotent requests, concurrency checks and eight passing JUnit tests. It's a local demo, not a real payment system.
-- [Bobal Android app](bobal-language-learning-app.html) — archived language-learning project with original screenshot.
+A Java 21 and Spring Boot API that handles payment retries without sending the money twice. It uses fake accounts. The repository has the actual code, instructions and automated tests.
 
-## Hiring & search
+**[Bobal Language Learning App](bobal-language-learning-app.html)**
 
-- [Software developer in Toronto — experience and hiring profile](hire-software-developer-toronto.html)
-- [Bobal Android language-learning case study](bobal-language-learning-app.html)
-- [Search Console and optional analytics setup](docs/SEO-ANALYTICS.md)
+An earlier Android project with IELTS vocabulary search, flashcards and speaking practice. I included a screenshot from the original app.
 
-The portfolio includes SEO metadata, profile structured data, and a sitemap. Visitor analytics is **not enabled** until a GA4 Measurement ID is configured. When enabled, the site asks for consent before loading Google's analytics script.
+The main website also has project details from my BMO work. Those pages explain what I worked on without sharing internal bank code.
 
-## Built with
+## About the website
 
-**HTML · CSS · JavaScript**
+It's built using plain HTML, CSS and JavaScript. There's a projects section, a systems diagram and a debugging quiz you can play.
 
-No heavy frontend framework is required. The portfolio uses custom visuals, lightweight interactions and responsive layouts. There's no backend to configure.
+You can see the live site here:
+
+https://raghavbobal1.github.io/portfolio-website-latest/
 
 ## Run it locally
 
@@ -42,25 +36,22 @@ cd portfolio-website-latest
 python3 -m http.server 8000
 ```
 
-Open **http://localhost:8000**. You can also open `index.html` directly.
+Open http://localhost:8000.
 
-## Behind the scenes
-
-- `index.html` — content and page structure
-- `styles.css` — visual design and responsive styling
-- `script.js` — interactions, project panels and challenges
-- `tests/` — lightweight site checks
-- `docs/` — [deployment notes](docs/DEPLOYMENT.md) and [project documentation](docs/PROJECTS.md)
-
-Run the checks with:
+To run the website checks:
 
 ```bash
 python3 -m unittest discover -s tests -v
 node --check script.js
+node --test tests/challenge.test.cjs
 ```
 
----
+The Java payment API lives in [its own repository](https://github.com/raghavbobal1/payment-reliability-api), not inside this website.
 
-**Based in Toronto, Canada.** Open to software engineering opportunities across backend, full-stack and AI-enabled applications.
+## Other pages
 
-**[Visit the website](https://raghavbobal1.github.io/portfolio-website-latest/)** · **[Get in touch](mailto:raghavbobal10@gmail.com)**
+[Hiring and experience](hire-software-developer-toronto.html)
+
+[Google indexing and visitor analytics setup](docs/SEO-ANALYTICS.md)
+
+[Contact me](mailto:raghavbobal10@gmail.com)

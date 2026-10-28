@@ -1,23 +1,31 @@
-# Keeping project case studies accurate
+# Project notes
 
-The portfolio is a public showcase. Each card should point to something an interviewer can inspect: code, a demo, a design write-up or a tested prototype.
+I want the website to show what actually exists instead of making everything sound like a finished product.
 
-## Project status
+## Projects I'm still working on
 
-**Banking Operations Agent:** Java / Spring AI / MCP prototype. Before adding a live badge, run the build and tests, provide a synthetic-data demo, and verify the model/tool flow end to end.
+**AI Banking Operations Agent**
 
-**Security & Banking RAG Assistant:** Architecture and ingestion/retrieval design. When implementation is complete, link the repository and include a sample document corpus plus evaluation results.
+There's a Java and Spring AI prototype. I still need to finish testing the tool calls and deployment before calling it a working application.
 
-**Incident & Production Support Agent:** Investigation workflow design. Before showcasing as a deployed application, implement log ingestion, retrieval, audit trail and approval checks using synthetic data.
+**Security and Banking RAG**
 
-**BMO banking work:** Describe your own Angular, API integration, security remediation and debugging work. Do not upload employer source code, internal diagrams or customer information.
+This is an architecture idea for searching documents and answering with sources. The working version is not ready yet.
 
-## When a new project ships
+**Incident Support Agent**
 
-- Include reproducible setup steps and example inputs.
-- Add a screenshot or 30–60 second demo showing an actual user flow.
-- Show architecture, technical choices and tests.
-- Explain one failure mode and how it is handled.
-- Replace placeholder project links and screenshots in the portfolio.
+This is a planned tool to help investigate production issues using logs and runbooks. It isn't a deployed application.
 
-This makes the site more convincing and gives you concrete examples to discuss in technical interviews.
+**BMO work**
+
+The website can explain the features I worked on but it shouldn't include source code or internal documents from the bank.
+
+**Payment Reliability API**
+
+This one has working code and passing tests. It lives in its own [GitHub repository](https://github.com/raghavbobal1/payment-reliability-api). It still uses fake accounts and in memory storage.
+
+## Before adding another project
+
+I want to be able to run it, show a real feature and explain what still needs fixing. A README, a test run and a few screenshots are more useful than making a huge list of half finished projects.
+
+I'll add a link to the source and keep the project description up to date as the code changes.
