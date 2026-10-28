@@ -89,11 +89,25 @@ class PortfolioTests(unittest.TestCase):
 
     def test_five_years_experience_is_consistent(self):
         hiring = (ROOT / "hire-software-developer-toronto.html").read_text(encoding="utf-8")
-        self.assertIn("5 years of professional software development experience", hiring)
-        self.assertIn("I have 5 years of overall software development experience", hiring)
+        self.assertIn("5 years of experience", hiring)
+        self.assertIn("I have 5 years of software development experience", hiring)
         self.assertIn("5 years of software development experience", self.html)
         self.assertNotIn("four years", hiring.lower())
         self.assertNotIn("4 years", hiring.lower())
+
+    def test_human_readable_project_copy(self):
+        files = (
+            "README.md", "docs/PROJECTS.md", "docs/DEPLOYMENT.md",
+            "index.html", "script.js", "hire-software-developer-toronto.html",
+            "bobal-language-learning-app.html", "quiz-engine.js", "site.webmanifest"
+        )
+        for path in files:
+            with self.subTest(path=path):
+                content = (ROOT / path).read_text(encoding="utf-8")
+                self.assertNotIn("—", content)
+                self.assertNotIn("–", content)
+                self.assertNotRegex(content, r",\\s+(and|or)\\b")
+                self.assertNotRegex(content.lower(), r"case[-–—]stud(y|ies)")
 
     def test_seo_metadata_and_pages(self):
         import xml.etree.ElementTree as ET
