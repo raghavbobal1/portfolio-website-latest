@@ -184,7 +184,41 @@
   function activatePalette(i){const entry=paletteResults[i];if(!entry)return;closePalette();if(entry.project){openProject(entry.project);return;}if(entry.target.startsWith('http')){window.open(entry.target,'_blank','noopener,noreferrer');return;}if(entry.target==='resume-download'){document.querySelector('.pill-outline')?.click();return;}if(entry.target.endsWith('.pdf')){window.open(entry.target,'_blank');return;}const target=document.querySelector(entry.target);target?.scrollIntoView({behavior:'smooth'});}
   $('#cmd-open').addEventListener('click',openPalette);backdrop.addEventListener('click',closePalette);searchInput.addEventListener('input',()=>{paletteSelected=0;renderPalette(searchInput.value);});searchInput.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();paletteSelected=Math.min(paletteSelected+1,paletteResults.length-1);renderPalette(searchInput.value);}if(e.key==='ArrowUp'){e.preventDefault();paletteSelected=Math.max(0,paletteSelected-1);renderPalette(searchInput.value);}if(e.key==='Enter'){e.preventDefault();activatePalette(paletteSelected);}});
   function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('visible');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('visible'),2200);}
-  $('#copy-email').addEventListener('click',async()=>{const value='raghavbobal10@gmail.com';try{await navigator.clipboard.writeText(value);toast('EMAIL COPIED ✓');}catch(e){const t=document.createElement('textarea');t.value=value;t.style.position='fixed';t.style.opacity='0';document.body.append(t);t.select();try{document.execCommand('copy');toast('EMAIL COPIED ✓');}catch(e){toast(value);}t.remove();}});
+  const copyEmailButton=$('#copy-email');
+  const copyEmailLabel=$('.copy-email-label',copyEmailButton);
+  let copyEmailResetTimer;
+  copyEmailButton.addEventListener('click',async()=>{
+    const email='raghavbobal10@gmail.com';
+    let copied=false;
+    try{
+      if(navigator.clipboard?.writeText){
+        await navigator.clipboard.writeText(email);
+        copied=true;
+      }
+    }catch(e){/* Fall back for browsers that block clipboard access. */}
+    if(!copied){
+      const field=document.createElement('textarea');
+      field.value=email;
+      field.setAttribute('readonly','');
+      field.style.cssText='position:fixed;left:-9999px;top:0;opacity:0';
+      document.body.append(field);
+      field.select();
+      try{copied=document.execCommand('copy')===true;}catch(e){copied=false;}
+      field.remove();
+    }
+    clearTimeout(copyEmailResetTimer);
+    if(copied){
+      copyEmailLabel.textContent='COPIED ✓';
+      copyEmailButton.setAttribute('aria-label','Email address copied');
+      toast('EMAIL COPIED ✓');
+      copyEmailResetTimer=setTimeout(()=>{
+        copyEmailLabel.textContent='COPY EMAIL';
+        copyEmailButton.setAttribute('aria-label','Copy email address');
+      },2200);
+    }else{
+      toast('Copy blocked. Use the email link above.');
+    }
+  });
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!palette.hidden)closePalette();else if(drawer.classList.contains('open'))closeProject();}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(palette.hidden)openPalette();else closePalette();}if(e.key==='/'&& !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&palette.hidden&&!drawer.classList.contains('open')){e.preventDefault();openPalette();}const inGame=(()=>{const r=$('#playground').getBoundingClientRect();return r.top<innerHeight*0.9&&r.bottom>innerHeight*0.15;})();const typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)||document.activeElement.isContentEditable;if(inGame&&!typing&&!e.altKey&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&palette.hidden&&!drawer.classList.contains('open')){if(['1','2','3','4'].includes(e.key)){e.preventDefault();answer(Number(e.key)-1);}else if(e.key==='Enter'&&answered&&document.activeElement.tagName!=='BUTTON'){e.preventDefault();gameButton.click();}}});
   const mobToggle=$('#mobile-toggle'),mobMenu=$('#mobile-menu');mobToggle.addEventListener('click',()=>{mobMenu.hidden=!mobMenu.hidden;mobToggle.setAttribute('aria-expanded',String(!mobMenu.hidden));});$$('#mobile-menu a').forEach(a=>a.addEventListener('click',()=>{mobMenu.hidden=true;mobToggle.setAttribute('aria-expanded','false');}));
   function updateScroll(){const max=document.documentElement.scrollHeight-innerHeight;$('#reading-progress').style.width=(max>0?window.scrollY/max*100:0)+'%';}addEventListener('scroll',updateScroll,{passive:true});updateScroll();$('#year').textContent=new Date().getFullYear();

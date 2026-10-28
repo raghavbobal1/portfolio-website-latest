@@ -48,6 +48,11 @@ class PortfolioTests(unittest.TestCase):
 
     def test_contact_details(self):
         self.assertIn("raghavbobal10@gmail.com", self.html)
+        self.assertIn('id="copy-email"', self.html)
+        self.assertIn('class="copy-email-label"', self.html)
+        self.assertIn('class="copy-email-icon"', self.html)
+        self.assertIn("copyEmailLabel.textContent='COPIED ✓'", self.script)
+        self.assertIn("copied=document.execCommand('copy')===true", self.script)
 
     def test_all_local_assets_exist(self):
         for url in self.parser.urls:
