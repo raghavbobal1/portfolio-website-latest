@@ -106,7 +106,7 @@ class PortfolioTests(unittest.TestCase):
                 content = (ROOT / path).read_text(encoding="utf-8")
                 self.assertNotIn("—", content)
                 self.assertNotIn("–", content)
-                self.assertNotRegex(content, r",\\s+(and|or)\\b")
+                self.assertNotRegex(content, r",\s+(and|or)\b")
                 self.assertNotRegex(content.lower(), r"case[-–—]stud(y|ies)")
 
     def test_seo_metadata_and_pages(self):
