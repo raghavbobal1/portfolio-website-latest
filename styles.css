@@ -79,3 +79,24 @@
 .challenge-result>p{font:12px/1.7 var(--mono);color:#e2e9db;margin:12px 0 0}
 @media(max-width:950px){.challenge-dashboard strong{font-size:24px}.challenge-dashboard>div{padding:12px 10px}.challenge-select-label{margin-top:12px}}
 @media(max-width:620px){.challenge-categories{gap:7px}.challenge-category{padding:10px 11px;font-size:9px}.challenge-dashboard{gap:6px}.challenge-dashboard>div{padding:11px 8px}.challenge-dashboard span{font-size:8px}.challenge-dashboard strong{font-size:20px}.terminal-content{padding:18px}.question-progress{font-size:9px}.challenge-description{font-size:19px}.challenge-question-head{flex-wrap:wrap;gap:4px}.challenge-difficulty{font-size:8px}.challenge-option{font-size:11px;min-height:54px}.terminal-footer{flex-wrap:wrap;line-height:1.5}}
+
+
+/* Payments case study: uses the same wide-card layout as the Bobal project. */
+.paymentlab-card{grid-column:1 / -1}
+.paymentlab-panel{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(24px,4vw,80px);align-items:center;margin-top:14px}
+.paymentlab-visual{min-height:390px;background:radial-gradient(circle at 48% 45%,#355544 0%,#243b39 48%,#152325 100%);display:flex;justify-content:center;align-items:center;overflow:hidden;border:1px solid #a8c7b433}
+.paymentlab-window{width:min(85%,490px);background:#101b20;border:1px solid #546b64;border-radius:7px;box-shadow:13px 16px 0 #0614186e,0 15px 33px #07120d67;transform:rotate(-2deg);padding:19px 22px 22px;font-family:var(--mono)}
+.paymentlab-window-head{display:flex;align-items:center;justify-content:space-between;color:#acbcb3;font-size:10px;border-bottom:1px solid #3a5049;padding-bottom:15px;margin-bottom:22px}
+.paymentlab-window-head span:last-child{color:#d3f893;letter-spacing:5px}
+.paymentlab-request{font:700 14px var(--mono);color:#e8f6dd;margin-bottom:12px}
+.paymentlab-key{font:10px var(--mono);color:#a8b8af;margin-bottom:21px;overflow-wrap:anywhere}
+.paymentlab-response{color:#b6d1bd;font:11px/1.6 var(--mono)}
+.paymentlab-response span{display:inline-block;color:#16231a;background:#daf888;padding:3px 9px;margin-right:8px;font-weight:700}
+.paymentlab-response.replay{color:#d6f5c7}
+.paymentlab-divider{height:1px;background:#3a5049;margin:22px 0}
+.paymentlab-foot{font:9px var(--mono);color:#afcba4;margin-top:29px;letter-spacing:.045em}
+.paymentlab-card .project-info{padding:14px clamp(0px,2vw,25px) 20px 0}
+.paymentlab-card .project-info h3{font-size:clamp(37px,5vw,68px)}
+.paymentlab-card .project-info p{max-width:510px;font-size:17px;line-height:1.7}
+@media(max-width:950px){.paymentlab-panel{grid-template-columns:1fr 1fr;gap:24px}.paymentlab-visual{min-height:330px}.paymentlab-window{width:92%;padding:14px}.paymentlab-card .project-info h3{font-size:clamp(30px,4vw,52px)}}
+@media(max-width:620px){.paymentlab-panel{grid-template-columns:1fr;gap:10px}.paymentlab-visual{min-height:310px;margin:0 -22px}.paymentlab-window{width:88%}.paymentlab-card .project-info{padding:12px 0 5px}.paymentlab-card .project-info h3{font-size:42px}.paymentlab-card .project-info p{font-size:15px}}
