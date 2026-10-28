@@ -36,7 +36,7 @@ class PortfolioTests(unittest.TestCase):
                 self.assertIn(section, self.parser.ids)
 
     def test_case_studies(self):
-        for project in ("wires", "security", "olbb", "agent", "rag", "incident", "bobal"):
+        for project in ("wires", "security", "olbb", "agent", "rag", "incident", "bobal", "paymentlab"):
             with self.subTest(project=project):
                 self.assertIn(f'data-project="{project}"', self.html)
                 self.assertIn(f"{project}:", self.script)
@@ -61,6 +61,15 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn('href="https://github.com/raghavbobal1"', self.html)
         self.assertIn('data-filter="personal"', self.html)
         self.assertTrue((ROOT / "assets" / "bobal-app.png").is_file())
+
+    def test_payment_project_has_real_source(self):
+        source = ROOT / "labs" / "payment-reliability-api"
+        self.assertIn('data-project="paymentlab"', self.html)
+        self.assertIn("PERSONAL (02)", self.html)
+        self.assertIn("ALL (08)", self.html)
+        self.assertTrue((source / "pom.xml").is_file())
+        self.assertTrue((source / "src/main/java/dev/raghav/payments/LedgerService.java").is_file())
+        self.assertTrue((source / "src/test/java/dev/raghav/payments/LedgerServiceTest.java").is_file())
 
     def test_replayable_engineering_challenge(self):
         for required in ('data-category="mixed"', 'data-category="java"',
