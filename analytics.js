@@ -52,7 +52,7 @@
       prompt.setAttribute('role', 'region');
       prompt.setAttribute('aria-label', 'Analytics privacy choice');
       const heading = document.createElement('h2');
-      heading.textContent = 'A little insight, only if you agree.';
+      heading.textContent = 'Allow visitor analytics?';
       const p = document.createElement('p');
       p.append('May I use Google Analytics to understand page visits, referral sources and approximate visitor locations? It may use cookies. I do not collect visitors\' names. ');
       const link = document.createElement('a');
