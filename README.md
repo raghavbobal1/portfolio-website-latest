@@ -15,6 +15,14 @@ A personal corner of the web built to show how I approach software engineering: 
 - **My journey:** Experience at BMO and Beacontree, research at Lambton College, and my education.
 - **Quick navigation:** Keyboard shortcuts, responsive layouts and accessible interactions.
 
+## Hiring & search
+
+- [Software developer in Toronto — experience and hiring profile](hire-software-developer-toronto.html)
+- [Bobal Android language-learning case study](bobal-language-learning-app.html)
+- [Search Console and optional analytics setup](docs/SEO-ANALYTICS.md)
+
+The portfolio includes SEO metadata, profile structured data, and a sitemap. Visitor analytics is **not enabled** until a GA4 Measurement ID is configured. When enabled, the site asks for consent before loading Google's analytics script.
+
 ## Built with
 
 **HTML · CSS · JavaScript**
