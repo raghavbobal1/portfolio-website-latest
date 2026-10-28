@@ -74,6 +74,12 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn('quiz-engine.js', self.html)
         self.assertIn("quiz.makeRound(category,ROUND_SIZE)", self.script)
 
+    def test_hiring_page_is_reachable_from_home(self):
+        self.assertEqual(
+            self.html.count('href="hire-software-developer-toronto.html"'), 3
+        )
+        self.assertTrue((ROOT / "hire-software-developer-toronto.html").is_file())
+
     def test_seo_metadata_and_pages(self):
         import xml.etree.ElementTree as ET
         self.assertIn('<link rel="canonical"', self.html)
