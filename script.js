@@ -55,6 +55,7 @@
         {label:'VIEW WORKING SOURCE ↗',url:'https://github.com/raghavbobal1/portfolio-website-latest/tree/main/labs/payment-reliability-api'},
         {label:'VIEW AUTOMATED TESTS ↗',url:'https://github.com/raghavbobal1/portfolio-website-latest/actions/workflows/payment-reliability-api.yml'}
       ]
+    }
   };
   const systemModes = {
     banking:{name:'SECURE DIGITAL BANKING',desc:'From customer workflows to dependable integrations.',nodes:['Digital banking UI','REST API contracts','Validation + logic','Secure delivery']},
