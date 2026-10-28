@@ -102,8 +102,12 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn("consent", privacy.lower())
         self.assertIn("analytics-config.js", self.html)
 
-    def test_resume_is_embedded(self):
-        self.assertIn("data:application/pdf;base64,", self.html)
+    def test_resume_download_exists(self):
+        self.assertIn('href="assets/Raghav_Bobal_Resume.pdf"', self.html)
+        pdf = ROOT / "assets" / "Raghav_Bobal_Resume.pdf"
+        self.assertTrue(pdf.is_file())
+        self.assertTrue(pdf.read_bytes().startswith(b"%PDF-"))
+        self.assertNotIn("data:application/pdf;base64,", self.html)
 
 
 if __name__ == "__main__":
