@@ -43,7 +43,7 @@
 @media(max-width:620px){.header-github{padding:7px}.header-github svg{width:18px;height:18px}.header-actions{gap:10px}.bobal-card{grid-column:auto}.bobal-panel{grid-template-columns:1fr;gap:10px}.bobal-visual{min-height:300px;margin:0 -22px}.bobal-visual img{height:270px}.bobal-card .project-info{padding:12px 0 5px}.bobal-card .project-info h3{font-size:42px}.bobal-card .project-info p{font-size:15px}.drawer-image.is-screenshot{height:275px}.drawer-image.is-screenshot img{height:245px}}
 
 
-/* Engineering playground — randomized scenario challenge */
+/* Randomized engineering game styles */
 .challenge-select-label{font:700 10px var(--mono);letter-spacing:.075em;color:#392e4e;margin:0 0 13px}
 .challenge-categories{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;max-width:530px}
 .challenge-category{border:1px solid #5c5078;border-radius:999px;background:#e1d7f4;color:#272335;padding:10px 13px;font:700 10px var(--mono);letter-spacing:.025em;transition:background .2s,color .2s,transform .2s}
