@@ -52,8 +52,8 @@
       outcome:'An executable Spring Boot API with tests and a Dockerfile is committed to GitHub. It uses in-memory storage and has no authentication or production banking integration; the next improvement is transactional database persistence.',
       stack:['Java 21','Spring Boot 4.1','REST','BigDecimal','Idempotency','JUnit'],
       links:[
-        {label:'VIEW WORKING SOURCE ↗',url:'https://github.com/raghavbobal1/portfolio-website-latest/tree/main/labs/payment-reliability-api'},
-        {label:'VIEW AUTOMATED TESTS ↗',url:'https://github.com/raghavbobal1/portfolio-website-latest/actions/workflows/payment-reliability-api.yml'}
+        {label:'VIEW WORKING SOURCE ↗',url:'https://github.com/raghavbobal1/payment-reliability-api'},
+        {label:'VIEW AUTOMATED TESTS ↗',url:'https://github.com/raghavbobal1/payment-reliability-api/actions/workflows/ci.yml'}
       ]
     }
   };

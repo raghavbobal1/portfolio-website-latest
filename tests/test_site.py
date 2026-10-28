@@ -62,14 +62,12 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn('data-filter="personal"', self.html)
         self.assertTrue((ROOT / "assets" / "bobal-app.png").is_file())
 
-    def test_payment_project_has_real_source(self):
-        source = ROOT / "labs" / "payment-reliability-api"
+    def test_payment_project_links_to_standalone_repository(self):
         self.assertIn('data-project="paymentlab"', self.html)
         self.assertIn("PERSONAL (02)", self.html)
         self.assertIn("ALL (08)", self.html)
-        self.assertTrue((source / "pom.xml").is_file())
-        self.assertTrue((source / "src/main/java/dev/raghav/payments/LedgerService.java").is_file())
-        self.assertTrue((source / "src/test/java/dev/raghav/payments/LedgerServiceTest.java").is_file())
+        self.assertIn("https://github.com/raghavbobal1/payment-reliability-api", self.script)
+        self.assertFalse((ROOT / "labs" / "payment-reliability-api").exists())
 
     def test_replayable_engineering_challenge(self):
         for required in ('data-category="mixed"', 'data-category="java"',
