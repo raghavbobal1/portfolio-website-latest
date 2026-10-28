@@ -15,6 +15,11 @@ A personal corner of the web built to show how I approach software engineering: 
 - **My journey:** Experience at BMO and Beacontree, research at Lambton College, and my education.
 - **Quick navigation:** Keyboard shortcuts, responsive layouts and accessible interactions.
 
+## Projects with source code
+
+- [Payment reliability API (Java 21 / Spring Boot)](labs/payment-reliability-api/) — a simulated transfer API with idempotent requests, concurrency checks and eight passing JUnit tests. It's a local demo, not a real payment system.
+- [Bobal Android app](bobal-language-learning-app.html) — archived language-learning project with original screenshot.
+
 ## Hiring & search
 
 - [Software developer in Toronto — experience and hiring profile](hire-software-developer-toronto.html)
