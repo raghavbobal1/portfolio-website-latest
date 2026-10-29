@@ -114,6 +114,11 @@ class PortfolioTests(unittest.TestCase):
                 self.assertNotRegex(content, r",\s+(and|or)\b")
                 self.assertNotRegex(content.lower(), r"case[-–—]stud(y|ies)")
 
+    def test_name_is_searchable(self):
+        self.assertIn("Hey, I'm Raghav Bobal.", self.html)
+        self.assertIn('"alternateName":"RaghavBobal"', self.html)
+        self.assertIn("https://raghavbobal.com/", self.html)
+
     def test_custom_domain_urls(self):
         domain = "https://raghavbobal.com/"
         self.assertEqual((ROOT / "CNAME").read_text(encoding="utf-8").strip(), "raghavbobal.com")
