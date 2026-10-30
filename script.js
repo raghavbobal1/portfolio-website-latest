@@ -39,7 +39,7 @@
       number:'08 / 08',
       eyebrow:'PERSONAL BACKEND PROJECT · JAVA / SPRING BOOT · 2026',
       subtitle:'When a client retries a transfer, it should not move the money twice.',
-      status:'INTERACTIVE LOCAL DEMO · POSTGRESQL INTEGRATION IN PROGRESS',
+      status:'LIVE PUBLIC DEMO · POSTGRESQL · CI VERIFIED',
       monogram:'RETRY<br>SAFELY',
       problem:"Sometimes a transfer goes through but the customer doesn't get a confirmation. If the app retries, the API needs to recognize that it's the same payment.",
       role:'Built a Java Spring Boot API and an interactive browser dashboard with synthetic accounts, transfer requests, HTTP responses and retry scenarios. The PostgreSQL profile persists balances, transfers and idempotency records.',
@@ -47,11 +47,12 @@
         'Accept an Idempotency-Key and return the same transfer receipt when a request is repeated.',
         'Reject an attempt to reuse a key for a different amount or destination.',
         'Use BigDecimal for money and a PostgreSQL transaction-scoped advisory lock to serialize demo transfers across instances.',
-        'Added real PostgreSQL integration tests for concurrent retries, unique competing payments and persistence; CI verification is in progress.'
+        'Verified PostgreSQL integration tests for concurrent retries, competing payments and persistence in passing GitHub Actions CI.'
       ],
-      outcome:'The interactive dashboard and API are implemented and run together locally. The default mode is in-memory; a PostgreSQL profile is available. Public hosting, authentication and production controls are not included. Database test verification is ongoing.',
+      outcome:'The public Render demo runs the Java API and PostgreSQL-backed synthetic ledger. A same-key retry was confirmed live with HTTP 200 and Idempotent-Replayed: true. This is a demonstration, not a production payment system. Render free hosting may need time to wake up.',
       stack:['Java 21','Spring Boot','PostgreSQL','Flyway','JDBC','Idempotency','JUnit'],
       links:[
+        {label:'TRY THE LIVE DEMO ↗',url:'https://payment-reliability-demo.onrender.com/'},
         {label:'VIEW WORKING SOURCE ↗',url:'https://github.com/raghavbobal1/payment-reliability-api'},
         {label:'VIEW AUTOMATED TESTS ↗',url:'https://github.com/raghavbobal1/payment-reliability-api/actions/workflows/ci.yml'}
       ]
