@@ -1,0 +1,54 @@
+name: Capture real payment demo screenshots
+on:
+  push:
+    paths:
+      - '.github/workflows/capture-payment-demo.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Capture dashboard and payment scenarios
+        run: |
+          mkdir -p assets/payment-reliability
+          node <<'JS'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            const page = await browser.newPage({viewport:{width:1365,height:1000},deviceScaleFactor:1});
+            const base='https://payment-reliability-demo.onrender.com/';
+            await page.goto(base,{waitUntil:'domcontentloaded',timeout:180000});
+            await page.locator('#accounts .account').first().waitFor({timeout:120000});
+            await page.locator('#history').waitFor();
+            await page.screenshot({path:'assets/payment-reliability/01-dashboard.png',fullPage:true});
+            await page.locator('#from').selectOption('ACC-1001');
+            await page.locator('#to').selectOption('ACC-1002');
+            await page.locator('#amount').fill('1.23');
+            await page.locator('#newkey').click();
+            await page.locator('#send').click();
+            await page.locator('#output').getByText('HTTP 201',{exact:false}).waitFor({timeout:30000});
+            await page.screenshot({path:'assets/payment-reliability/02-created-transfer.png',fullPage:true});
+            await page.locator('#retry').click();
+            await page.locator('#output').getByText('HTTP 200',{exact:false}).waitFor({timeout:30000});
+            await page.screenshot({path:'assets/payment-reliability/03-idempotent-retry.png',fullPage:true});
+            await page.locator('#conflict').click();
+            await page.locator('#output').getByText('HTTP 409',{exact:false}).waitFor({timeout:30000});
+            await page.screenshot({path:'assets/payment-reliability/04-conflicting-retry.png',fullPage:true});
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          JS
+      - name: Commit real screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/payment-reliability/*.png
+          git diff --cached --quiet || (git commit -m "Add captured live payment dashboard and retry screenshots" && git push)
